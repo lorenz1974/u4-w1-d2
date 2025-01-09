@@ -18,15 +18,19 @@ public class Main {
         double[] aree = new double[n];
 
         for (int i = 0; i < n; i++) {
-            rettangoli[i] = new Rettangolo();
-            double[] dimensioni = rettangoli[i].createRettangolo(i + 1, scanner);
-            double base = dimensioni[0];
-            double altezza = dimensioni[1];
-            perimetri[i] = rettangoli[i].Perimetro(base, altezza);
-            aree[i] = rettangoli[i].Area(base, altezza);
 
-            System.out.println("Il perimetro del rettangolo è: " + rettangoli[i].Perimetro(base, altezza));
-            System.out.println("L'area del rettangolo è: " + rettangoli[i].Area(base, altezza));
+            System.out.print("Inserisci la base del rettangolo [ " + (i+1)  + " ]: ");
+            double base = scanner.nextDouble();
+            System.out.print("Inserisci l'altezza del rettangolo [ " + (i+1) + " ]: ");
+            double altezza = scanner.nextDouble();
+
+            rettangoli[i] = new Rettangolo(base, altezza);
+
+            perimetri[i] = rettangoli[i].getPerimetro();
+            aree[i] = rettangoli[i].getArea();
+
+            System.out.println("Il perimetro del rettangolo è: " + perimetri[i]);
+            System.out.println("L'area del rettangolo è: " + aree[i]);
             System.out.println();
         }
 
@@ -42,21 +46,34 @@ public class Main {
     }
 }
 
-class Rettangolo {
+class Rettangolo{
 
-    public double[] createRettangolo(int n, Scanner scanner) {
-        System.out.print("Inserisci la base del rettangolo [ " + n + " ]: ");
-        double base = scanner.nextDouble();
-        System.out.print("Inserisci l'altezza del rettangolo [ " + n + " ]: ");
-        double altezza = scanner.nextDouble();
-        return new double[] { base, altezza };
+    private double base;
+    private double altezza;
+    private double perimetro;
+    private double area;
+
+    Rettangolo( double base, double altezza){
+        //System.out.println("* Classe Rettangolo istanziata! *");
+        this.base = base;
+        this.altezza = altezza;
+        this.perimetro = this.calcolaPerimetro();
+        this.area = this.calcolaArea();
     }
 
-    public double Perimetro(double base, double altezza) {
-        return 2 * (base + altezza);
+    private double calcolaPerimetro() {
+        return 2 * (this.base + this.altezza);
     }
 
-    public double Area(double base, double altezza) {
-        return base * altezza;
+    private double calcolaArea() {
+        return this.base * this.altezza;
+    }
+
+    public double getPerimetro() {
+        return this.perimetro;
+    }
+
+    public double getArea() {
+        return this.area;
     }
 }
